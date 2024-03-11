@@ -1,0 +1,7 @@
+ARG_ENABLE('webview', 'webview support', 'no');
+
+if (PHP_WEBVIEW != 'no') {
+	AC_DEFINE('HAVE_WEBVIEW', 1, 'webview support enabled');
+
+	EXTENSION('webview', 'webview.c', null, '/DZEND_ENABLE_STATIC_TSRMLS_CACHE=1');
+}
