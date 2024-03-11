@@ -17,3 +17,7 @@ class Webview
     {
     }
 }
+
+function test1(): void
+{
+}

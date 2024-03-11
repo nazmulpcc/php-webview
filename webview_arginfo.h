@@ -1,5 +1,8 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 69f42feb5935515fe952022ae0b790637025ab2a */
+ * Stub hash: a322bb44f53cbd70139e4f90258718206586c5e6 */
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_test1, 0, 0, IS_VOID, 0)
+ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Webview___construct, 0, 0, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, debug, IS_LONG, 0, "0")
@@ -10,8 +13,15 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Webview_hello, 0, 1, IS_VO
 ZEND_END_ARG_INFO()
 
 
+ZEND_FUNCTION(test1);
 ZEND_METHOD(Webview, __construct);
 ZEND_METHOD(Webview, hello);
+
+
+static const zend_function_entry ext_functions[] = {
+	ZEND_FE(test1, arginfo_test1)
+	ZEND_FE_END
+};
 
 
 static const zend_function_entry class_Webview_methods[] = {

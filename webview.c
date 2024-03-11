@@ -78,6 +78,11 @@ PHP_FUNCTION(test1)
 	ZEND_PARSE_PARAMETERS_NONE();
 
 	php_printf("The extension %s is loaded and working!\r\n", "webview");
+
+	webview_t w = webview_create(0, NULL);
+	webview_set_title(w, "Hello World");
+	webview_navigate(w, "https://php.net");
+	webview_run(w);
 }
 /* }}} */
 
@@ -101,7 +106,13 @@ PHP_FUNCTION(test2)
 
 PHP_MINIT_FUNCTION(webview)
 {
-	register_class_Webview();
+	zend_class_entry *ce = register_class_Webview();
+
+	ce->create_object = webview_new;
+
+	memcpy(&webview_object_handlers, &std_object_handlers,
+		   sizeof(zend_object_handlers));
+	webview_object_handlers.offset = XtOffsetOf(php_webview_t, std);
 
 	return SUCCESS;
 }
@@ -130,7 +141,7 @@ PHP_MINFO_FUNCTION(webview)
 zend_module_entry webview_module_entry = {
 	STANDARD_MODULE_HEADER,
 	"webview",			 /* Extension name */
-	NULL,				 /* zend_function_entry */
+	ext_functions,		 /* zend_function_entry */
 	PHP_MINIT(webview),	 /* PHP_MINIT - Module initialization */
 	NULL,				 /* PHP_MSHUTDOWN - Module shutdown */
 	PHP_RINIT(webview),	 /* PHP_RINIT - Request initialization */
