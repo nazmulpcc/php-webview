@@ -4,11 +4,16 @@
  * @generate-class-entries
  * @undocumentable
  */
-
-function test1(): void
+class Webview
 {
-}
+    private int $debug = 0;
 
-function test2(string $str = ""): string
-{
+    public function __construct(int $debug = 0)
+    {
+        //
+    }
+
+    public function hello(string $salutation): void
+    {
+    }
 }

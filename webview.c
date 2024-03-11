@@ -74,26 +74,8 @@ PHP_FUNCTION(test2)
 
 PHP_MINIT_FUNCTION(webview)
 {
-	zend_class_entry ce;
+	register_class_Webview();
 
-	ZEND_BEGIN_ARG_INFO(arginfo_webview_construct, 0)
-	ZEND_ARG_INFO(0, debug)
-	ZEND_END_ARG_INFO()
-
-	ZEND_BEGIN_ARG_INFO(arginfo_webview_hello, 0)
-	ZEND_ARG_INFO(0, salutation) // pass by reference
-	ZEND_END_ARG_INFO()
-
-	static const zend_function_entry webview_functions[] = {
-		PHP_ME(Webview, __construct, arginfo_webview_construct, ZEND_ACC_PUBLIC)
-			PHP_ME(Webview, hello, arginfo_webview_hello, ZEND_ACC_PUBLIC)
-				PHP_FE_END};
-
-	INIT_CLASS_ENTRY(ce, "Webview", webview_functions);
-	webview_class_entry = zend_register_internal_class(&ce);
-
-	zend_declare_property_long(webview_class_entry,
-							   "debug", sizeof("debug") - 1, 0, ZEND_ACC_PRIVATE);
 	return SUCCESS;
 }
 
@@ -121,7 +103,7 @@ PHP_MINFO_FUNCTION(webview)
 zend_module_entry webview_module_entry = {
 	STANDARD_MODULE_HEADER,
 	"webview",			 /* Extension name */
-	ext_functions,		 /* zend_function_entry */
+	NULL,				 /* zend_function_entry */
 	PHP_MINIT(webview),	 /* PHP_MINIT - Module initialization */
 	NULL,				 /* PHP_MSHUTDOWN - Module shutdown */
 	PHP_RINIT(webview),	 /* PHP_RINIT - Request initialization */
