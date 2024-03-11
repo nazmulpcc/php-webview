@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 77684f840a93757501bbff7e3049cbfc928407f5 */
+ * Stub hash: 10f25ab9fa87903546e2cdfc07ba2e7ec2b9bdba */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_test1, 0, 0, IS_VOID, 0)
 ZEND_END_ARG_INFO()
@@ -19,6 +19,7 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Webview_set_size, 0, 2, IS_VOID, 0)
 	ZEND_ARG_TYPE_INFO(0, width, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, height, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, hint, IS_LONG, 0, "0")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Webview_navigate, 0, 1, IS_VOID, 0)

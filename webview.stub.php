@@ -21,7 +21,7 @@ class Webview
     {
     }
 
-    public function set_size(int $width, int $height): void
+    public function set_size(int $width, int $height, int $hint = 0): void
     {
     }
 

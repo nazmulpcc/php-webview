@@ -88,15 +88,20 @@ PHP_METHOD(Webview, set_html)
 
 PHP_METHOD(Webview, set_size)
 {
-	zend_long width, height;
+	zend_long width, height, hint = 0;
 	php_webview_t *container = Z_WEBVIEW_P(ZEND_THIS);
 
-	ZEND_PARSE_PARAMETERS_START(2, 2)
+	ZEND_PARSE_PARAMETERS_START(2, 3)
 	Z_PARAM_LONG(width);
 	Z_PARAM_LONG(height);
+	Z_PARAM_OPTIONAL
+	if (ZEND_NUM_ARGS() > 2)
+	{
+		Z_PARAM_LONG(hint);
+	}
 	ZEND_PARSE_PARAMETERS_END();
 
-	webview_set_size(container->native, width, height, 0);
+	webview_set_size(container->native, width, height, hint);
 }
 
 PHP_METHOD(Webview, navigate)
@@ -183,6 +188,11 @@ PHP_MINIT_FUNCTION(webview)
 	memcpy(&webview_object_handlers, &std_object_handlers,
 		   sizeof(zend_object_handlers));
 	webview_object_handlers.offset = XtOffsetOf(php_webview_t, std);
+
+	REGISTER_LONG_CONSTANT("WEBVIEW_HINT_NONE", 0, CONST_CS | CONST_PERSISTENT);
+	REGISTER_LONG_CONSTANT("WEBVIEW_HINT_MIN", 1, CONST_CS | CONST_PERSISTENT);
+	REGISTER_LONG_CONSTANT("WEBVIEW_HINT_MAX", 2, CONST_CS | CONST_PERSISTENT);
+	REGISTER_LONG_CONSTANT("WEBVIEW_HINT_FIXED", 3, CONST_CS | CONST_PERSISTENT);
 
 	return SUCCESS;
 }
