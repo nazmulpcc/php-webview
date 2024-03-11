@@ -56,19 +56,89 @@ PHP_METHOD(Webview, __construct)
 	container->native = webview_create(debug, NULL);
 }
 
-PHP_METHOD(Webview, hello)
+PHP_METHOD(Webview, __destruct)
 {
-	zval *salutation;
+	php_webview_t *container = Z_WEBVIEW_P(ZEND_THIS);
+	webview_destroy(container->native);
+}
+
+PHP_METHOD(Webview, set_title)
+{
+	zval *title;
 	php_webview_t *container = Z_WEBVIEW_P(ZEND_THIS);
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-	Z_PARAM_ZVAL(salutation)
+	Z_PARAM_ZVAL(title)
 	ZEND_PARSE_PARAMETERS_END();
 
-	webview_set_title(container->native, Z_STRVAL(*salutation));
-	webview_set_html(container->native, "Hello World");
+	webview_set_title(container->native, Z_STRVAL(*title));
+}
 
-	zend_print_zval(salutation, 0);
+PHP_METHOD(Webview, set_html)
+{
+	zval *html;
+	php_webview_t *container = Z_WEBVIEW_P(ZEND_THIS);
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+	Z_PARAM_ZVAL(html)
+	ZEND_PARSE_PARAMETERS_END();
+
+	webview_set_html(container->native, Z_STRVAL(*html));
+}
+
+PHP_METHOD(Webview, set_size)
+{
+	zend_long width, height;
+	php_webview_t *container = Z_WEBVIEW_P(ZEND_THIS);
+
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+	Z_PARAM_LONG(width);
+	Z_PARAM_LONG(height);
+	ZEND_PARSE_PARAMETERS_END();
+
+	webview_set_size(container->native, width, height, 0);
+}
+
+PHP_METHOD(Webview, navigate)
+{
+	zval *url;
+	php_webview_t *container = Z_WEBVIEW_P(ZEND_THIS);
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+	Z_PARAM_ZVAL(url)
+	ZEND_PARSE_PARAMETERS_END();
+
+	webview_navigate(container->native, Z_STRVAL(*url));
+}
+
+PHP_METHOD(Webview, init)
+{
+	zval *js;
+	php_webview_t *container = Z_WEBVIEW_P(ZEND_THIS);
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+	Z_PARAM_ZVAL(js)
+	ZEND_PARSE_PARAMETERS_END();
+
+	webview_init(container->native, Z_STRVAL(*js));
+}
+
+PHP_METHOD(Webview, eval)
+{
+	zval *js;
+	php_webview_t *container = Z_WEBVIEW_P(ZEND_THIS);
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+	Z_PARAM_ZVAL(js)
+	ZEND_PARSE_PARAMETERS_END();
+
+	webview_eval(container->native, Z_STRVAL(*js));
+}
+
+PHP_METHOD(Webview, run)
+{
+	php_webview_t *container = Z_WEBVIEW_P(ZEND_THIS);
+
 	webview_run(container->native);
 }
 
