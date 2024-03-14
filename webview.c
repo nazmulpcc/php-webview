@@ -152,8 +152,15 @@ PHP_METHOD(Webview, eval)
 PHP_METHOD(Webview, run)
 {
 	php_webview_t *container = Z_WEBVIEW_P(ZEND_THIS);
-
+	ZEND_PARSE_PARAMETERS_NONE();
 	webview_run(container->native);
+}
+
+PHP_METHOD(Webview, terminate)
+{
+	php_webview_t *container = Z_WEBVIEW_P(ZEND_THIS);
+	ZEND_PARSE_PARAMETERS_NONE();
+	webview_terminate(container->native);
 }
 
 void bind_callback_handler(const char *seq, const char *req, void *arg)

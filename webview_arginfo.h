@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 40c14338ce3330a0cbd18b85160dedb21d31cb4c */
+ * Stub hash: b4d8bd7c5be65c9d2ad050462aac6f04f6d20b65 */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Webview___construct, 0, 0, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, debug, IS_LONG, 0, "0")
@@ -32,6 +32,8 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Webview_run, 0, 0, IS_VOID, 0)
 ZEND_END_ARG_INFO()
 
+#define arginfo_class_Webview_terminate arginfo_class_Webview_run
+
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Webview_bind, 0, 2, IS_VOID, 0)
 	ZEND_ARG_TYPE_INFO(0, name, IS_STRING, 0)
 	ZEND_ARG_TYPE_INFO(0, callback, IS_CALLABLE, 0)
@@ -53,6 +55,7 @@ ZEND_METHOD(Webview, navigate);
 ZEND_METHOD(Webview, init);
 ZEND_METHOD(Webview, eval);
 ZEND_METHOD(Webview, run);
+ZEND_METHOD(Webview, terminate);
 ZEND_METHOD(Webview, bind);
 ZEND_METHOD(Webview, unbind);
 ZEND_METHOD(Webview, __destruct);
@@ -67,6 +70,7 @@ static const zend_function_entry class_Webview_methods[] = {
 	ZEND_ME(Webview, init, arginfo_class_Webview_init, ZEND_ACC_PUBLIC)
 	ZEND_ME(Webview, eval, arginfo_class_Webview_eval, ZEND_ACC_PUBLIC)
 	ZEND_ME(Webview, run, arginfo_class_Webview_run, ZEND_ACC_PUBLIC)
+	ZEND_ME(Webview, terminate, arginfo_class_Webview_terminate, ZEND_ACC_PUBLIC)
 	ZEND_ME(Webview, bind, arginfo_class_Webview_bind, ZEND_ACC_PUBLIC)
 	ZEND_ME(Webview, unbind, arginfo_class_Webview_unbind, ZEND_ACC_PUBLIC)
 	ZEND_ME(Webview, __destruct, arginfo_class_Webview___destruct, ZEND_ACC_PUBLIC)

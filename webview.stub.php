@@ -41,6 +41,10 @@ class Webview
     {
     }
 
+    public function terminate(): void
+    {
+    }
+
     public function bind(string $name, callable $callback): void
     {
     }
