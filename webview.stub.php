@@ -41,11 +41,15 @@ class Webview
     {
     }
 
+    public function bind(string $name, callable $callback): void
+    {
+    }
+
+    public function unbind(string $name): void
+    {
+    }
+
     public function __destruct()
     {
     }
-}
-
-function test1(): void
-{
 }

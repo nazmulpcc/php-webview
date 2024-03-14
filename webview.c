@@ -17,6 +17,8 @@
 	ZEND_PARSE_PARAMETERS_END()
 #endif
 
+zend_result php_json_decode_ex(zval *return_value, const char *str, size_t str_len, zend_long options, zend_long depth);
+
 static zend_object_handlers webview_object_handlers;
 
 typedef struct php_webview_t
@@ -24,6 +26,13 @@ typedef struct php_webview_t
 	webview_t native;
 	zend_object std;
 } php_webview_t;
+
+typedef struct bind_arg_t
+{
+	webview_t native;
+	zend_fcall_info *fci;
+	zend_fcall_info_cache *fcc;
+} bind_arg_t;
 
 #define Z_WEBVIEW_P(zv) \
 	((php_webview_t *)((char *)(Z_OBJ_P(zv)) - XtOffsetOf(php_webview_t, std)))
@@ -53,7 +62,7 @@ PHP_METHOD(Webview, __construct)
 								  "debug", sizeof("debug") - 1, debug);
 	}
 
-	container->native = webview_create(debug, NULL);
+	container->native = webview_create((int) debug, NULL);
 }
 
 PHP_METHOD(Webview, __destruct)
@@ -101,7 +110,7 @@ PHP_METHOD(Webview, set_size)
 	}
 	ZEND_PARSE_PARAMETERS_END();
 
-	webview_set_size(container->native, width, height, hint);
+	webview_set_size(container->native, (int) width, (int) height, hint);
 }
 
 PHP_METHOD(Webview, navigate)
@@ -147,37 +156,67 @@ PHP_METHOD(Webview, run)
 	webview_run(container->native);
 }
 
-/* {{{ void test1() */
-PHP_FUNCTION(test1)
+void bind_callback_handler(const char *seq, const char *req, void *arg)
 {
-	ZEND_PARSE_PARAMETERS_NONE();
+	bind_arg_t *context = (bind_arg_t *)arg;
 
-	php_printf("The extension %s is loaded and working!\r\n", "webview");
+	zval args;
+	zval *result = emalloc(sizeof(zval));
+	context->fci->retval = result;
+	context->fci->param_count = 0;
 
-	webview_t w = webview_create(0, NULL);
-	webview_set_title(w, "Hello World");
-	webview_navigate(w, "https://php.net");
-	webview_run(w);
+	if (strlen(req) > 0) {
+		php_json_decode_ex(&args, req, strlen(req), 1, 512);
+		context->fci->param_count = zend_array_count(Z_ARRVAL(args));
+		zend_fcall_info_args(context->fci, &args);
+	}
+
+	if(zend_call_function(context->fci, context->fcc) == SUCCESS){
+		if (ZVAL_IS_NULL(result)) {
+			ZVAL_STRING(result, "[]");
+		}
+		webview_return(context->native, seq, 0, Z_STRVAL_P(result));
+	} else {
+		webview_return(context->native, seq, 1, "[]");
+	}
+	zval_ptr_dtor(result);
+	zval_ptr_dtor(&args);
 }
-/* }}} */
 
-/* {{{ string test2( [ string $var ] ) */
-PHP_FUNCTION(test2)
+PHP_METHOD(Webview, bind)
 {
-	char *var = "World";
-	size_t var_len = sizeof("World") - 1;
-	zend_string *retval;
+	zval *name;
+	php_webview_t *container = Z_WEBVIEW_P(ZEND_THIS);
 
-	ZEND_PARSE_PARAMETERS_START(0, 1)
-	Z_PARAM_OPTIONAL
-	Z_PARAM_STRING(var, var_len)
+    bind_arg_t *context = emalloc(sizeof(bind_arg_t));
+    context->native = container->native;
+    context->fci = emalloc(sizeof(zend_fcall_info));
+    context->fcc = emalloc(sizeof(zend_fcall_info_cache));
+
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+	Z_PARAM_ZVAL(name)
+	Z_PARAM_FUNC(*context->fci, *context->fcc)
 	ZEND_PARSE_PARAMETERS_END();
 
-	retval = strpprintf(0, "Hello %s", var);
+    Z_TRY_ADDREF(context->fci->function_name);
+    if (context->fci->object != NULL){
+        ++context->fci->object->gc.refcount; // @todo: really needed?
+    }
 
-	RETURN_STR(retval);
+	webview_bind(container->native, Z_STRVAL(*name), bind_callback_handler, context);
 }
-/* }}}*/
+
+PHP_METHOD(Webview, unbind)
+{
+	zval *name;
+	php_webview_t *container = Z_WEBVIEW_P(ZEND_THIS);
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+	Z_PARAM_ZVAL(name)
+	ZEND_PARSE_PARAMETERS_END();
+
+	webview_unbind(container->native, Z_STRVAL(*name));
+}
 
 PHP_MINIT_FUNCTION(webview)
 {
@@ -221,7 +260,7 @@ PHP_MINFO_FUNCTION(webview)
 zend_module_entry webview_module_entry = {
 	STANDARD_MODULE_HEADER,
 	"webview",			 /* Extension name */
-	ext_functions,		 /* zend_function_entry */
+	NULL,		 /* zend_function_entry */
 	PHP_MINIT(webview),	 /* PHP_MINIT - Module initialization */
 	NULL,				 /* PHP_MSHUTDOWN - Module shutdown */
 	PHP_RINIT(webview),	 /* PHP_RINIT - Request initialization */

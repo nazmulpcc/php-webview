@@ -1,8 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 10f25ab9fa87903546e2cdfc07ba2e7ec2b9bdba */
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_test1, 0, 0, IS_VOID, 0)
-ZEND_END_ARG_INFO()
+ * Stub hash: 40c14338ce3330a0cbd18b85160dedb21d31cb4c */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Webview___construct, 0, 0, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, debug, IS_LONG, 0, "0")
@@ -32,13 +29,22 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_class_Webview_eval arginfo_class_Webview_navigate
 
-#define arginfo_class_Webview_run arginfo_test1
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Webview_run, 0, 0, IS_VOID, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Webview_bind, 0, 2, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(0, name, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, callback, IS_CALLABLE, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Webview_unbind, 0, 1, IS_VOID, 0)
+	ZEND_ARG_TYPE_INFO(0, name, IS_STRING, 0)
+ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Webview___destruct, 0, 0, 0)
 ZEND_END_ARG_INFO()
 
 
-ZEND_FUNCTION(test1);
 ZEND_METHOD(Webview, __construct);
 ZEND_METHOD(Webview, set_title);
 ZEND_METHOD(Webview, set_html);
@@ -47,13 +53,9 @@ ZEND_METHOD(Webview, navigate);
 ZEND_METHOD(Webview, init);
 ZEND_METHOD(Webview, eval);
 ZEND_METHOD(Webview, run);
+ZEND_METHOD(Webview, bind);
+ZEND_METHOD(Webview, unbind);
 ZEND_METHOD(Webview, __destruct);
-
-
-static const zend_function_entry ext_functions[] = {
-	ZEND_FE(test1, arginfo_test1)
-	ZEND_FE_END
-};
 
 
 static const zend_function_entry class_Webview_methods[] = {
@@ -65,6 +67,8 @@ static const zend_function_entry class_Webview_methods[] = {
 	ZEND_ME(Webview, init, arginfo_class_Webview_init, ZEND_ACC_PUBLIC)
 	ZEND_ME(Webview, eval, arginfo_class_Webview_eval, ZEND_ACC_PUBLIC)
 	ZEND_ME(Webview, run, arginfo_class_Webview_run, ZEND_ACC_PUBLIC)
+	ZEND_ME(Webview, bind, arginfo_class_Webview_bind, ZEND_ACC_PUBLIC)
+	ZEND_ME(Webview, unbind, arginfo_class_Webview_unbind, ZEND_ACC_PUBLIC)
 	ZEND_ME(Webview, __destruct, arginfo_class_Webview___destruct, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
