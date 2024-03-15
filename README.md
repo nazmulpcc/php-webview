@@ -40,7 +40,7 @@ On linux the process is simple. Just run the following commands after cloning th
 
 ```bash
 phpize
-./configure
+./configure LDFLAGS=-lwebview
 make
 sudo make install
 ```
@@ -48,15 +48,11 @@ sudo make install
 On mac, you might have to set a few environment variables before running the above commands. For example:
 
 ```bash
-export LDFLAGS="-L/usr/local/lib -lwebview"
-export CFLAGS="-I/usr/local/include"
-export CC=gcc-13 # or whatever version of gcc you have
-phpize
+phpize CC=gcc-13 CFLAGS="-I/usr/local/include" LDFLAGS="-L/usr/local/lib -lwebview"
 ./configure
 make
 make install
 ```
-Note that you can pass these env variables as arguments for the configure command. This will be fixed in the future so that you don't have to do this.
 
 # Usage
 
