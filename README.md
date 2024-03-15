@@ -33,7 +33,7 @@ sudo cp build/library/libwebview.so /usr/lib
 sudo cp webview.h /usr/include
 ```
 
-If you face any issue or you want to work in windows, please consult the [Getting Started](https://github.com/webview/webview?tab=readme-ov-file#getting-started) section of the webview library.
+If you face any issue, or you want to work in windows, please consult the [Getting Started](https://github.com/webview/webview?tab=readme-ov-file#getting-started) section of the webview library.
 
 # Installation
 On linux the process is simple. Just run the following commands after cloning the repository:
@@ -60,7 +60,7 @@ Note that you can pass these env variables as arguments for the configure comman
 
 # Usage
 
-See the [webview.stub.php](https://github.com/nazmulpcc/php-webview/blob/master/webview.stub.php) file for the class signature. Also, checkout the [examples](https://github.com/nazmulpcc/php-webview/tree/master/examples) directory for some examples.
+See the [webview.stub.php](webview.stub.php) file for the class signature. Also, checkout the [examples](examples) directory for some examples.
 
 # Known Issues
 There's a few issues like some random crashes especially during the creation and destruction of the webview object. Also, all the functions are not yet implemented. They'll be implemented in the future when needed.
