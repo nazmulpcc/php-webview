@@ -36,7 +36,8 @@ sudo cp webview.h /usr/include
 If you face any issue, or you want to work in windows, please consult the [Getting Started](https://github.com/webview/webview?tab=readme-ov-file#getting-started) section of the webview library.
 
 # Installation
-On linux the process is simple. Just run the following commands after cloning the repository:
+
+## Linux
 
 ```bash
 phpize
@@ -45,11 +46,11 @@ make
 sudo make install
 ```
 
-On mac, you might have to set a few environment variables before running the above commands. For example:
+## Mac
 
 ```bash
-phpize CC=gcc-13 CFLAGS="-I/usr/local/include" LDFLAGS="-L/usr/local/lib -lwebview"
-./configure
+phpize 
+./configure CC=gcc-13 CFLAGS="-I/usr/local/include" LDFLAGS="-L/usr/local/lib -lwebview"
 make
 make install
 ```
