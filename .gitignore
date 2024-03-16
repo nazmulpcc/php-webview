@@ -42,3 +42,5 @@ tmp-php.ini
 *.dep
 .idea
 .vscode
+configure~
+config.h.in~
