@@ -101,13 +101,10 @@ PHP_METHOD(Webview, set_size)
 	php_webview_t *container = Z_WEBVIEW_P(ZEND_THIS);
 
 	ZEND_PARSE_PARAMETERS_START(2, 3)
-	Z_PARAM_LONG(width);
-	Z_PARAM_LONG(height);
+	Z_PARAM_LONG(width)
+	Z_PARAM_LONG(height)
 	Z_PARAM_OPTIONAL
-	if (ZEND_NUM_ARGS() > 2)
-	{
-		Z_PARAM_LONG(hint);
-	}
+	Z_PARAM_LONG(hint)
 	ZEND_PARSE_PARAMETERS_END();
 
 	webview_set_size(container->native, (int) width, (int) height, hint);
