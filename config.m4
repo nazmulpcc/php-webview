@@ -59,8 +59,8 @@ if test "$PHP_WEBVIEW" != "no"; then
 
   dnl Remove this code block if the library supports pkg-config.
   dnl --with-webview -> check for lib and symbol presence
-  dnl LIBNAME=WEBVIEW # you may want to change this
-  dnl LIBSYMBOL=WEBVIEW # you most likely want to change this
+  LIBNAME=webview # you may want to change this
+  LIBSYMBOL=webview_create # you most likely want to change this
 
   dnl If you need to check for a particular library function (e.g. a conditional
   dnl or version-dependent feature) and you are using pkg-config:
@@ -75,17 +75,16 @@ if test "$PHP_WEBVIEW" != "no"; then
 
   dnl If you need to check for a particular library function (e.g. a conditional
   dnl or version-dependent feature) and you are not using pkg-config:
-  dnl PHP_CHECK_LIBRARY($LIBNAME, $LIBSYMBOL,
-  dnl [
-  dnl   PHP_ADD_LIBRARY_WITH_PATH($LIBNAME, $WEBVIEW_DIR/$PHP_LIBDIR, WEBVIEW_SHARED_LIBADD)
-  dnl   AC_DEFINE(HAVE_WEBVIEW_FEATURE, 1, [ ])
-  dnl ],[
-  dnl   AC_MSG_ERROR([FEATURE not supported by your webview library.])
-  dnl ],[
-  dnl   -L$WEBVIEW_DIR/$PHP_LIBDIR -lm
-  dnl ])
-  dnl
-  dnl PHP_SUBST(WEBVIEW_SHARED_LIBADD)
+  PHP_CHECK_LIBRARY($LIBNAME, $LIBSYMBOL,
+  [
+    PHP_ADD_LIBRARY_WITH_PATH($LIBNAME, $WEBVIEW_DIR/$PHP_LIBDIR, WEBVIEW_SHARED_LIBADD)
+    AC_DEFINE(HAVE_WEBVIEW_FEATURE, 1, [ ])
+  ],[
+    AC_MSG_ERROR([FEATURE not supported by your webview library.])
+  ],[
+    -L$WEBVIEW_DIR/$PHP_LIBDIR -lm
+  ])
+  PHP_SUBST(WEBVIEW_SHARED_LIBADD)
 
   dnl In case of no dependencies
   AC_DEFINE(HAVE_WEBVIEW, 1, [ Have webview support ])

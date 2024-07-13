@@ -41,7 +41,7 @@ If you face any issue, or you want to work in windows, please consult the [Getti
 
 ```bash
 phpize
-./configure LDFLAGS=-lwebview
+./configure
 make
 sudo make install
 ```
