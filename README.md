@@ -6,7 +6,7 @@ Internally, it uses the [webview](https://github.com/webview/webview) library.
 
 # Supported Platforms
 
-In theory, this extension should work on windows, mac & linux but only tested on windows & mac so far.
+In theory, this extension should work on windows, mac & linux but only tested on linux & mac so far.
 
 # Before you start
 You'll need basic tools for C compilation. On mac, the gnu compiler is recommended. On windows, you can use the Visual Studio compiler.
@@ -60,7 +60,7 @@ make install
 See the [webview.stub.php](webview.stub.php) file for the class signature. Also, checkout the [examples](examples) directory for some examples.
 
 # Known Issues
-There's a few issues like some random crashes especially during the creation and destruction of the webview object. Also, all the functions are not yet implemented. They'll be implemented in the future when needed.
+~~There's a few issues like some random crashes especially during the creation and destruction of the webview object.~~ When using with the [parallel](https://www.php.net/manual/en/book.parallel.php) php extension, in linux sometime it crashes while quitting the threads and in mac, it doesn't work at all with multi threading support.
  The installation process should also be improved. In theory, it should be possible to skip the installation of the webview library.
 If you face any issue, please open an issue in the repository. If you can fix it, please open a pull request.
 
